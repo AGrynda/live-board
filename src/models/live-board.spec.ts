@@ -94,4 +94,43 @@ describe('Live Board Test', () => {
       expect(summary.length).toEqual(1);
     });
   });
+
+  
+  describe('get summary', () => {
+    let liveBoard: LiveBoard;
+    let match: Match;
+    let summary: any[];
+
+    beforeEach(() => {
+      liveBoard = new LiveBoard();
+    });
+
+    it('should return an empty summary', () => {
+      summary = liveBoard.getSummary();
+      expect(summary.length).toEqual(0);
+    });
+
+    it('should return a summary with correct order by scores', () => {
+      match = liveBoard.startMatch('Poland', 'Slovakia');
+      liveBoard.updateScore(match.uuid, 1, 0);
+      const match2 = liveBoard.startMatch('USA', 'Canada');
+      liveBoard.updateScore(match2.uuid, 1, 1);
+      summary = liveBoard.getSummary();
+      expect(summary[0]).toEqual('USA 1 - Canada 1');
+    });
+    
+    it('should return a summary with correct order by timestamp', () => {
+      let match = liveBoard.startMatch('Poland', 'Slovakia');
+      liveBoard.updateScore(match.uuid, 1, 0);
+      jest.useFakeTimers();
+      setTimeout(() => {
+        const match2 = liveBoard.startMatch('USA', 'Canada');
+        liveBoard.updateScore(match2.uuid, 1, 0);
+      }, 1500);
+      jest.runAllTimers();
+      
+      summary = liveBoard.getSummary();
+      expect(summary[0]).toEqual('USA 1 - Canada 0');
+    });
+  });
 });

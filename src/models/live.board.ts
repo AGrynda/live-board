@@ -28,8 +28,21 @@ export class LiveBoard implements LiveBoardInterface {
       throw new Error('Match not found');
     }
   }
-  getSummary(): any[] {
-    return Array.from(this.matches.values());
+  
+  getSummary() {
+    const summary = Array.from(this.matches.values());
+    summary.sort(this.sortMatches);
+
+    return summary.map((match) => { 
+      return match.getSummary();
+    });
   }
+
+  private sortMatches(a: Match, b: Match) {
+    if(a.totalScore === b.totalScore) {
+      return b.startedTimestamp - a.startedTimestamp;
+    }
+    return b.totalScore - a.totalScore;
+  };
   
 }
