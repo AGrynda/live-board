@@ -43,4 +43,33 @@ describe('Live Board Test', () => {
       expect(summary.length).toEqual(2);
     });
   });
+  
+  describe('score updated', () => {
+    let liveBoard: LiveBoard;
+    let match: Match;
+
+    beforeEach(() => {
+      liveBoard = new LiveBoard();
+      match = liveBoard.startMatch('Poland', 'Slovakia');
+    });
+
+    it('should update score', () => {
+      liveBoard.updateScore(match.uuid, 2, 1);
+      expect(match.teamHomeScore).toEqual(2);
+      expect(match.teamAwayScore).toEqual(1);
+    });
+
+    it('should update score for correct match', () => {
+      const match2 = liveBoard.startMatch('USA', 'Canada');
+      liveBoard.updateScore(match2.uuid, 2, 1);
+      expect(match.teamHomeScore).toEqual(0);
+      expect(match.teamAwayScore).toEqual(0);
+      expect(match2.teamHomeScore).toEqual(2);
+      expect(match2.teamAwayScore).toEqual(1);
+    });
+
+    it('should throw error if match not found', () => {
+      expect(() => liveBoard.updateScore('123', 1, 0)).toThrowError('Match not found');
+    });
+  });
 });
