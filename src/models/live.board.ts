@@ -11,7 +11,7 @@ export class LiveBoard implements LiveBoardInterface {
     throw new Error("Method not implemented.");
   }
   getSummary(): string[] {
-    throw new Error("Method not implemented.");
+    return [];
   }
   
 }
