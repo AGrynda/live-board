@@ -24,7 +24,9 @@ export class LiveBoard implements LiveBoardInterface {
     }
   }
   endMatch(matchUuid: string): void {
-    throw new Error("Method not implemented.");
+    if(!this.matches.delete(matchUuid)) {
+      throw new Error('Match not found');
+    }
   }
   getSummary(): any[] {
     return Array.from(this.matches.values());

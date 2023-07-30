@@ -72,4 +72,26 @@ describe('Live Board Test', () => {
       expect(() => liveBoard.updateScore('123', 1, 0)).toThrowError('Match not found');
     });
   });
+  
+  describe('match finished', () => {
+    let liveBoard: LiveBoard;
+    let match: Match;
+    let summary: any[];
+
+    beforeEach(() => {
+      liveBoard = new LiveBoard();
+    });
+
+    it('should throw error if match not found', () => {
+      expect(() => liveBoard.endMatch('123')).toThrowError('Match not found');
+    });
+
+    it('should remove a match', () => {
+      match = liveBoard.startMatch('Poland', 'Slovakia');
+      liveBoard.startMatch('USA', 'Canada');
+      liveBoard.endMatch(match.uuid);
+      summary = liveBoard.getSummary();
+      expect(summary.length).toEqual(1);
+    });
+  });
 });
