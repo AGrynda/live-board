@@ -1,5 +1,4 @@
-import { LiveBoard } from "./live.board";
-import { Match } from "./match";
+import { Match, LiveBoard } from ".";
 
 describe('Live Board Test', () => {
   describe('when the live board is created', () => {

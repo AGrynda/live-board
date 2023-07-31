@@ -1,4 +1,4 @@
-import { Match } from "./match";
+import { Match } from ".";
 
 export interface LiveBoardInterface {
   startMatch(teamHome: string, teamAway: string): Match;

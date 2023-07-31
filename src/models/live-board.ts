@@ -1,5 +1,4 @@
-import { LiveBoardInterface } from "./live-board.interface";
-import { Match } from "./match";
+import { LiveBoardInterface, Match } from ".";
 
 export class LiveBoard implements LiveBoardInterface {
   private matches: Map<string, Match>;
